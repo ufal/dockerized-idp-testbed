@@ -42,21 +42,6 @@ services:
     secrets:
      - source: sp_key
   
-       #  simplesamlphp:
-       #    build: ./simplesamlphp/
-       #    links:
-       #      - httpd-proxy:idptestbed
-       #    networks:
-       #     - back
-       #    secrets:
-       #     - source: ssp_key
-  
-#  php-cas:
-#    build: ./php-cas/
-#    links:
-#      - httpd-proxy:idptestbed
-#    networks:
-#     - back
 
 networks:
   front:
@@ -75,7 +60,5 @@ secrets:
     file: ./secrets/idp/idp-signing.key
   idp_sealer:
     file: ./secrets/idp/sealer.jks
-  ssp_key:
-    file: ./secrets/simplesamlphp/server.pem
   sp_key:
     file: ./secrets/sp/sp-key.pem
