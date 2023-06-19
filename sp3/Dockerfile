@@ -19,6 +19,10 @@ COPY httpd-and-shibd /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/httpd-and-shibd
 
+ARG HOSTNAME_FOR_BROWSER 
+RUN sed -i "s#Location=\"https://idptestbed#Location=\"https://${HOSTNAME_FOR_BROWSER}#" /etc/shibboleth/idp-metadata.xml \
+    && sed -i "s#idptestbed#${HOSTNAME_FOR_BROWSER}#g" /etc/httpd/conf.d/sp.conf
+
 EXPOSE 80
 
 CMD ["httpd-and-shibd"]

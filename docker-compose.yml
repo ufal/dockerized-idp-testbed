@@ -12,7 +12,10 @@ services:
      - "443:443"
 
   idp:
-    build: ./idp/
+    build:
+      context: ./idp/
+      args:
+        HOSTNAME_FOR_BROWSER: ${HOSTNAME_FOR_BROWSER:-idptestbed}
     depends_on: 
      - ldap
     environment:
@@ -36,7 +39,10 @@ services:
      - back
 
   sp:
-    build: ./sp3/ 
+    build: 
+      context: ./sp3/ 
+      args:
+        HOSTNAME_FOR_BROWSER: ${HOSTNAME_FOR_BROWSER:-idptestbed}
     networks:
      - back
     secrets:
