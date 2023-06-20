@@ -1,45 +1,298 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    This file is an EXAMPLE policy file.  While the policy presented in this 
-    example file is illustrative of some simple cases, it relies on the names of
-    non-existent example services and the example attributes demonstrated in the
-    default attribute-resolver.xml file.
-    
-    Deployers should refer to the documentation for a complete list of components
-    and their options.
+
+<!--
+  Doporučený attribute-filter.xml pro Shibboleth IdP 3.4.6+ v rámci eduID.cz
+  Jan Oppolzer <jan.oppolzer@cesnet.cz>
+
+  2017-04-07: První verze.
+  2017-06-01: Atribut `ou' pro eduID.cz, czTestFed.
+              Atribut `displayName' pro eduID.cz, czTestFed a eduGAIN.
+              Politika pro attributes.eduid.cz a tcs.cesnet.cz přesunuta do eduID.cz a czTestFed.
+  2017-06-08: Oprava chyby (value -> groupID)
+  2018-11-27: schacHomeOrg -> schacHomeOrganization
+  2019-19-10: Odebrání federace czTestFed. Přidání CoCo.
 -->
+
 <AttributeFilterPolicyGroup id="ShibbolethFilterPolicy"
-        xmlns="urn:mace:shibboleth:2.0:afp"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="urn:mace:shibboleth:2.0:afp http://shibboleth.net/schema/idp/shibboleth-afp.xsd">
+    xmlns="urn:mace:shibboleth:2.0:afp"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:mace:shibboleth:2.0:afp http://shibboleth.net/schema/idp/shibboleth-afp.xsd">
 
-    <!-- Release some attributes to an SP. -->
-    <AttributeFilterPolicy id="example1">
-        <PolicyRequirementRule xsi:type="OR">
-            <Rule xsi:type="Requester" value="https://sp.idptestbed/shibboleth" />
-            <Rule xsi:type="Requester" value="http://idptestbed/sp/simplesamlphp" />
-        </PolicyRequirementRule>
+    <!-- Research and Scholarship -->
+    <!-- https://www.eduid.cz/cs/tech/categories/rs -->
+    <AttributeFilterPolicy id="RS">
 
-        <AttributeRule attributeID="uid">
-            <PermitValueRule xsi:type="ANY" />
+	    <!--
+        <PolicyRequirementRule
+            xsi:type="EntityAttributeExactMatch"
+            attributeName="http://macedir.org/entity-category"
+	    attributeValue="http://refeds.org/category/research-and-scholarship" />
+-->
+        <PolicyRequirementRule
+		xsi:type="ANY"/>
+
+
+        <!-- displayName -->
+        <AttributeRule attributeID="displayName">
+            <PermitValueRule xsi:type="ANY"/>
         </AttributeRule>
 
+        <!-- eduPersonPrincipalName -->
+        <AttributeRule attributeID="eduPersonPrincipalName">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- eduPersonScopedAffiliation -->
+        <AttributeRule attributeID="eduPersonScopedAffiliation">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- eduPersonTargetedID -->
+        <AttributeRule attributeID="eduPersonTargetedID">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- givenName -->
+        <AttributeRule attributeID="givenName">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- mail -->
         <AttributeRule attributeID="mail">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- sn -->
+        <AttributeRule attributeID="sn">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+    </AttributeFilterPolicy>
+
+    <!-- Code of Conduct -->
+    <!-- https://www.eduid.cz/cs/tech/categories/coco -->
+    <AttributeFilterPolicy id="CoCo">
+
+        <PolicyRequirementRule
+            xsi:type="EntityAttributeExactMatch"
+            attributeName="http://macedir.org/entity-category"
+            attributeValue="http://www.geant.net/uri/dataprotection/code-of-conduct/v1" />
+
+        <!-- displayName -->
+        <AttributeRule attributeID="displayName">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+        </AttributeRule>
+        
+        <!-- cn -->
+        <AttributeRule attributeID="cn">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+        </AttributeRule>
+        
+        <!-- mail -->
+        <AttributeRule attributeID="mail">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+        </AttributeRule>
+        
+        <!-- eduPersonPrincipalName -->
+        <AttributeRule attributeID="eduPersonPrincipalName">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+        </AttributeRule>
+        
+        <!-- eduPersonScopedAffiliation -->
+        <AttributeRule attributeID="eduPersonScopedAffiliation">
+            <PermitValueRule xsi:type="AND">
+                <Rule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+                <Rule xsi:type="OR">
+                    <Rule xsi:type="Value" value="affiliate"       ignoreCase="true" />
+                    <Rule xsi:type="Value" value="alum"            ignoreCase="true" />
+                    <Rule xsi:type="Value" value="employee"        ignoreCase="true" />
+                    <Rule xsi:type="Value" value="faculty"         ignoreCase="true" />
+                    <Rule xsi:type="Value" value="library-walk-in" ignoreCase="true" />                
+                    <Rule xsi:type="Value" value="member"          ignoreCase="true" />
+                    <Rule xsi:type="Value" value="staff"           ignoreCase="true" />
+                    <Rule xsi:type="Value" value="student"         ignoreCase="true" />
+                </Rule>
+            </PermitValueRule>
+        </AttributeRule>
+        
+        <!-- eduPersonAffiliation -->
+        <AttributeRule attributeID="eduPersonAffiliation">
+            <PermitValueRule xsi:type="AND">
+                <Rule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+                <Rule xsi:type="OR">
+                    <Rule xsi:type="Value" value="affiliate"       ignoreCase="true" />
+                    <Rule xsi:type="Value" value="alum"            ignoreCase="true" />
+                    <Rule xsi:type="Value" value="employee"        ignoreCase="true" />
+                    <Rule xsi:type="Value" value="faculty"         ignoreCase="true" />
+                    <Rule xsi:type="Value" value="library-walk-in" ignoreCase="true" />                
+                    <Rule xsi:type="Value" value="member"          ignoreCase="true" />
+                    <Rule xsi:type="Value" value="staff"           ignoreCase="true" />
+                    <Rule xsi:type="Value" value="student"         ignoreCase="true" />
+                </Rule>
+            </PermitValueRule>
+        </AttributeRule>
+        
+        <!-- schacHomeOrganization -->
+        <AttributeRule attributeID="schacHomeOrganization">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="true" />
+        </AttributeRule>
+
+    </AttributeFilterPolicy>
+
+    <!-- eduID.cz -->
+    <AttributeFilterPolicy id="eduidcz">
+    
+        <PolicyRequirementRule
+            xsi:type="InEntityGroup"
+            groupID="https://eduid.cz/metadata" />
+
+        <!-- authMail -->
+        <AttributeRule attributeID="authMail">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
 
-        <AttributeRule attributeID="surname">
+        <!-- cn -->
+        <AttributeRule attributeID="cn">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
 
+        <!-- commonNameASCII -->
+        <AttributeRule attributeID="commonNameASCII">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- displayName -->
+        <AttributeRule attributeID="displayName">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- eduPersonEntitlement -->
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonPrincipalName -->
+        <AttributeRule attributeID="eduPersonPrincipalName">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonScopedAffiliation -->
+        <AttributeRule attributeID="eduPersonScopedAffiliation">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonTargetedID -->
+        <AttributeRule attributeID="eduPersonTargetedID">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonUniqueId -->
+        <AttributeRule attributeID="eduPersonUniqueId">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- givenName -->
         <AttributeRule attributeID="givenName">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
 
+        <!-- mail -->
+        <AttributeRule attributeID="mail">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- o -->
+        <AttributeRule attributeID="o">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- ou -->
+        <AttributeRule attributeID="ou">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- schacHomeOrganization -->
+        <AttributeRule attributeID="schacHomeOrganization">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- sn -->
+        <AttributeRule attributeID="sn">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- telephoneNumber -->
+        <AttributeRule attributeID="telephoneNumber">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- unstructuredName -->
+        <AttributeRule attributeID="unstructuredName">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+    </AttributeFilterPolicy>
+
+    <!-- eduGAIN -->
+    <AttributeFilterPolicy id="edugain">
+        
+        <PolicyRequirementRule
+            xsi:type="InEntityGroup" 
+            groupID="http://edugain.org/" />
+
+        <!-- cn -->
+        <AttributeRule attributeID="cn">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- displayName -->
+        <AttributeRule attributeID="displayName">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- eduPersonPrincipalName -->
         <AttributeRule attributeID="eduPersonPrincipalName">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonScopedAffiliation -->
+        <AttributeRule attributeID="eduPersonScopedAffiliation">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- eduPersonTargetedID -->
+        <AttributeRule attributeID="eduPersonTargetedID">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- givenName -->
+        <AttributeRule attributeID="givenName">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- mail -->
+        <AttributeRule attributeID="mail">  
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
+        <!-- sn -->
+        <AttributeRule attributeID="sn">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+            
+    </AttributeFilterPolicy>
+
+    <!-- transientId to anyone -->
+    <AttributeFilterPolicy id="releaseTransientIdToAnyone">
+
+        <PolicyRequirementRule xsi:type="ANY" />
+
+        <!-- transientId -->
+        <AttributeRule attributeID="transientId">
             <PermitValueRule xsi:type="ANY" />
         </AttributeRule>
 
     </AttributeFilterPolicy>
 
 </AttributeFilterPolicyGroup>
+
