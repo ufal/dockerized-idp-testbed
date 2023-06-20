@@ -5,27 +5,42 @@ cn: admin
 userPassword: password
 description: LDAP administrator
 
-
-dn: uid=student1,ou=People,dc=idptestbed
+dn: uid=bfu,ou=People,dc=idptestbed
+objectClass: inetOrgPerson
 objectClass: organizationalPerson
 objectClass: person
+objectClass: eduPerson
 objectClass: top
-objectClass: inetOrgPerson
-givenName: Stud
-uid: student1
-sn: Ent
-cn: Stud Ent
-mail: student1@idptestbed.edu
+cn:: QsSbxb5uw70gRnJhbnRhIFXFvml2YXRlbA==
+givenName:: RnJhbnRhIFXFvml2YXRlbA==
+mail: bfu@email.example
+sn:: QsSbxb5uw70=
+uid: bfu
 userPassword: password
 
-dn: uid=staff1,ou=People,dc=idptestbed
+dn: uid=no_email,ou=People,dc=idptestbed
+objectClass: inetOrgPerson
 objectClass: organizationalPerson
 objectClass: person
+objectClass: eduPerson
 objectClass: top
+cn: Without Email
+sn: Email
+uid: no_email
+userPassword: password
+
+dn: uid=person,ou=People,dc=idptestbed
 objectClass: inetOrgPerson
-givenName: St
-uid: staff1
-sn: aff
-cn: St aff
-mail: staff1@idptestbed.edu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: eduPerson
+objectClass: top
+cn: Per Son
+eduPersonAffiliation: member
+eduPersonAffiliation: student
+givenName: Per
+mail: person@email.example
+mail: nickname@email.example
+sn: Son
+uid: person
 userPassword: password
