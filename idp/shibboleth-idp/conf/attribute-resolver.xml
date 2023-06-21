@@ -98,8 +98,8 @@
     </AttributeDefinition>
 
     <!-- eduPersonAffiliation -->
-    <AttributeDefinition id="eduPersonAffiliation" xsi:type="Simple" dependencyOnly="true">
-        <InputDataConnector ref="staticAttributes" attributeNames="eduPersonAffiliation"/>
+    <AttributeDefinition id="eduPersonAffiliation" xsi:type="Simple">
+        <InputDataConnector ref="myLDAP" attributeNames="eduPersonAffiliation"/>
         <AttributeEncoder xsi:type="SAML1String" name="urn:mace:dir:attribute-def:eduPersonAffiliation" encodeType="false"/>
         <AttributeEncoder xsi:type="SAML2String" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1" friendlyName="eduPersonAffiliation" encodeType="false"/>
     </AttributeDefinition>
@@ -127,7 +127,7 @@
 
     <!-- eduPersonEntitlement -->
     <AttributeDefinition id="eduPersonEntitlement" xsi:type="Simple">
-        <InputDataConnector ref="staticAttributes" attributeNames="eduPersonEntitlement"/>
+        <InputDataConnector ref="myLDAP" attributeNames="eduPersonEntitlement"/>
         <DisplayName xml:lang="cs">Oprávnění pro některé služby</DisplayName>
         <DisplayName xml:lang="en">Permissions for specific services</DisplayName>
         <AttributeEncoder xsi:type="SAML1String" name="urn:mace:dir:attribute-def:eduPersonEntitlement" encodeType="false"/>

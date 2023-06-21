@@ -38,6 +38,9 @@ objectClass: top
 cn: Per Son
 eduPersonAffiliation: member
 eduPersonAffiliation: student
+eduPersonAffiliation: staff
+eduPersonEntitlement: urn:cuni:affiliation:staff@org1297.mff.cuni.cz
+eduPersonEntitlement: urn:cuni:affiliation:staff@mff.cuni.cz
 givenName: Per
 mail: person@email.example
 mail: nickname@email.example

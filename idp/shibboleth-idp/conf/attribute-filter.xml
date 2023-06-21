@@ -47,6 +47,16 @@
             <PermitValueRule xsi:type="ANY"/>
         </AttributeRule>
 
+        <!-- eduPersonAffiliation -->
+        <AttributeRule attributeID="eduPersonAffiliation">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <!-- eduPersonEntitlement -->
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="ANY" />
+        </AttributeRule>
+
         <!-- eduPersonTargetedID -->
         <AttributeRule attributeID="eduPersonTargetedID">
             <PermitValueRule xsi:type="ANY"/>
