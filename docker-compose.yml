@@ -10,14 +10,21 @@ services:
     ports:
      - "80:80"
      - "443:443"
+    depends_on:
+      - idp
+      - sp
 
   idp:
     build:
       context: ./idp/
       args:
         HOSTNAME_FOR_BROWSER: ${HOSTNAME_FOR_BROWSER:-idptestbed}
+    command: []
     depends_on: 
-     - ldap
+      ldap:
+        condition: service_started
+      mysql:
+        condition: service_healthy
     environment:
      - JETTY_MAX_HEAP=64m
      - JETTY_BROWSER_SSL_KEYSTORE_PASSWORD=password
@@ -47,6 +54,21 @@ services:
      - back
     secrets:
      - source: sp_key
+
+  # for storage of generated ids by idp
+  mysql:
+    image: mysql:5.7.42
+    networks:
+      - back
+    environment:
+      #- MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=t
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/01-shib.sql
+    healthcheck:
+      test: ["CMD-SHELL", "mysql shibboleth >/dev/null 2>&1 </dev/null"]
+      start_period: 10s
+
   
 
 networks:

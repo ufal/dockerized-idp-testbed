@@ -13,6 +13,12 @@
        default-destroy-method="destroy">
 
     <!-- Use this file to define any custom beans needed globally. -->
+    <bean id="shibboleth.MySQLDataSource"
+        class="org.apache.commons.dbcp2.BasicDataSource"
+        p:driverClassName="com.mysql.jdbc.Driver"
+        p:url="jdbc:mysql://mysql:3306/shibboleth"
+        p:username="shibboleth"
+        p:password="silne_heslo" />
 
     <!--
     Algorithm whitelists and blacklists that override or merge with library defaults. Normally you can leave

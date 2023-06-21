@@ -213,6 +213,13 @@
         <AttributeEncoder xsi:type="SAML2ScopedString" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" friendlyName="eduPersonScopedAffiliation" encodeType="false"/>
     </AttributeDefinition>
 
+    <!-- eduPersonTargetedID -->
+    <AttributeDefinition id="eduPersonTargetedID" xsi:type="SAML2NameID" sourceAttributeID="persistentID" nameIdFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
+         <Dependency ref="myStoredId" />
+         <AttributeEncoder xsi:type="SAML1XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" />
+         <AttributeEncoder xsi:type="SAML2XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" friendlyName="eduPersonTargetedID" />
+    </AttributeDefinition>
+
     <!-- givenName -->
     <AttributeDefinition id="givenName" xsi:type="Simple" >
         <InputDataConnector ref="myLDAP" attributeNames="givenName"/>
@@ -394,6 +401,16 @@
             validateTimerPeriod="%{idp.pool.LDAP.validatePeriod:PT5M}"
             expirationTime="%{idp.pool.LDAP.idleTime:PT10M}"
             failFastInitialize="%{idp.pool.LDAP.failFastInitialize:false}" />
+    </DataConnector>
+
+    <!-- StoredId Data Connector -->
+    <DataConnector id="myStoredId" xsi:type="StoredId"
+            sourceAttributeID="uid"
+            generatedAttributeID="persistentID"
+            salt="ltCL2ZAmRLKtbOVCn0kCq2cSMZnGXuS2pkC521rssl48aEC6"
+            queryTimeout="0">
+        <Dependency ref="uid" />
+        <BeanManagedConnection>shibboleth.MySQLDataSource</BeanManagedConnection>
     </DataConnector>
 
     <!-- LDAP Data Connector for groups -->
