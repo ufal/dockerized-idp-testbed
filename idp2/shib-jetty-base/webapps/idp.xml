@@ -1,6 +1,6 @@
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
   <Set name="war"><SystemProperty name="idp.home"/>/webapp/</Set>
-  <Set name="contextPath">/idp</Set>
+  <Set name="contextPath">/idp2</Set>
   <Set name="extractWAR">false</Set>
   <Set name="copyWebDir">false</Set>
   <Set name="copyWebInf">true</Set>

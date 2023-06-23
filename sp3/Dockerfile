@@ -5,7 +5,7 @@ FROM centos:centos7
 COPY etc-yum/shibboleth.repo /etc/yum.repos.d/shibboleth.repo
 
 RUN yum -y update \
-    && yum -y install httpd php mod_ssl shibboleth   \
+    && yum -y install httpd php mod_ssl shibboleth shibboleth-embedded-ds  \
     && yum -y clean all
 
 RUN mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.deactivated \ 
@@ -14,6 +14,7 @@ RUN mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.deactivated
 COPY etc-shibboleth /etc/shibboleth/
 COPY etc-httpd/ /etc/httpd/
 COPY var-www-html/ /var/www/html/
+COPY etc-shibboleth-ds/ /etc/shibboleth-ds/
 
 COPY httpd-and-shibd /usr/local/bin/
 
@@ -21,7 +22,10 @@ RUN chmod +x /usr/local/bin/httpd-and-shibd
 
 ARG HOSTNAME_FOR_BROWSER 
 RUN sed -i "s#Location=\"https://idptestbed#Location=\"https://${HOSTNAME_FOR_BROWSER}#" /etc/shibboleth/idp-metadata.xml \
-    && sed -i "s#idptestbed#${HOSTNAME_FOR_BROWSER}#g" /etc/httpd/conf.d/sp.conf
+    && sed -i "s#Location=\"https://idptestbed#Location=\"https://${HOSTNAME_FOR_BROWSER}#" /etc/shibboleth/idp2-metadata.xml \
+    # Servername
+    && sed -i "s#idptestbed#${HOSTNAME_FOR_BROWSER}#g" /etc/httpd/conf.d/sp.conf \
+    && sed -i "s#IDP_DISCOVERY#${HOSTNAME_FOR_BROWSER}#g" /etc/shibboleth/shibboleth2.xml
 
 EXPOSE 80
 
