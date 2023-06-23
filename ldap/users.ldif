@@ -47,3 +47,18 @@ mail: nickname@email.example
 sn: Son
 uid: person
 userPassword: password
+
+dn: uid=anon,ou=People,dc=idptestbed
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: eduPerson
+objectClass: top
+cn: Anon Ymous
+eduPersonAffiliation: student
+givenName: Anon
+mail: anon@email.example
+mail: ymous@email.example
+sn: Ymous
+uid: anon
+userPassword: password
