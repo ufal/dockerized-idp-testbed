@@ -38,9 +38,11 @@
         </AttributeRule>
 
         <!-- eduPersonPrincipalName -->
+	    <!--
         <AttributeRule attributeID="eduPersonPrincipalName">
             <PermitValueRule xsi:type="ANY"/>
         </AttributeRule>
+-->
 
         <!-- eduPersonScopedAffiliation -->
         <AttributeRule attributeID="eduPersonScopedAffiliation">

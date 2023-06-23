@@ -407,7 +407,7 @@
     <DataConnector id="myStoredId" xsi:type="StoredId"
             sourceAttributeID="uid"
             generatedAttributeID="persistentID"
-            salt="ltCL2ZAmRLKtbOVCn0kCq2cSMZnGXuS2pkC521rssl48aEC6"
+            salt="5w/gjFF/g96z1piKEMVbvWQ+i2jlW6nOHYY9uMLpgR34F6Yp"
             queryTimeout="0">
         <Dependency ref="uid" />
         <BeanManagedConnection>shibboleth.MySQLDataSource</BeanManagedConnection>
