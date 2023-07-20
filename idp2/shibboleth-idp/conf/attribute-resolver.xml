@@ -214,7 +214,25 @@
     </AttributeDefinition>
 
     <!-- eduPersonTargetedID -->
-    <AttributeDefinition id="eduPersonTargetedID" xsi:type="SAML2NameID" sourceAttributeID="persistentID" nameIdFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
+    <AttributeDefinition id="eduPersonTargetedID" xsi:type="ScriptedAttribute">
+        <InputAttributeDefinition ref="justEduPersonTargetedID"/>
+        <InputDataConnector ref="myLDAP" attributeNames="uid"/>
+        <Script>
+                <![CDATA[
+                logger = Java.type("org.slf4j.LoggerFactory").getLogger("net.shibboleth.idp.attribute.resolver.eptidbuilder");
+                var myUid = uid.getValues().get(0);
+                logger.info("uid: " + myUid);
+                if (myUid.indexOf("no_netid") > -1) {
+                    eduPersonTargetedID.getValues().retainAll([]);
+                } else {
+                    eduPersonTargetedID.addValue(justEduPersonTargetedID.getValues().get(0));
+                }
+                ]]>
+        </Script>
+         <AttributeEncoder xsi:type="SAML1XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" />
+         <AttributeEncoder xsi:type="SAML2XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" friendlyName="eduPersonTargetedID" />
+    </AttributeDefinition>
+    <AttributeDefinition id="justEduPersonTargetedID" xsi:type="SAML2NameID" sourceAttributeID="persistentID" nameIdFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
          <Dependency ref="myStoredId" />
          <AttributeEncoder xsi:type="SAML1XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" />
          <AttributeEncoder xsi:type="SAML2XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" friendlyName="eduPersonTargetedID" />

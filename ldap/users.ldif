@@ -62,3 +62,29 @@ mail: ymous@email.example
 sn: Ymous
 uid: anon
 userPassword: password
+
+dn: uid=no_netid,ou=People,dc=idptestbed
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: eduPerson
+objectClass: top
+cn: Without Netid
+eduPersonAffiliation: student
+givenName: Without
+mail: no_netid@email.example
+sn: Netid
+uid: no_netid
+userPassword: password
+
+dn: uid=no_netid_no_email,ou=People,dc=idptestbed
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: eduPerson
+objectClass: top
+cn: Without Headers
+sn: NoHeaders
+eduPersonAffiliation: student
+uid: no_netid_no_email
+userPassword: password
