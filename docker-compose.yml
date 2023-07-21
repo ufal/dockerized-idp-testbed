@@ -4,9 +4,6 @@ services:
   #This handles all of the http request to simple cert issues and both the SP and IdP can share the same ports.
   httpd-proxy:
     build: ./httpd-proxy/
-    networks:
-     - front
-     - back
     ports:
      - "80:80"
      - "443:443"
@@ -32,8 +29,6 @@ services:
      - JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD=password
     expose: 
      - "4443"
-    networks:
-     - back
     secrets:
      - source: idp_backchannel
      - source: idp_browser
@@ -58,8 +53,6 @@ services:
      - JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD=password
     expose: 
      - "4443"
-    networks:
-     - back
     secrets:
      - source: idp_backchannel
      - source: idp_browser
@@ -69,24 +62,18 @@ services:
    
   ldap:
     build: ./ldap/
-    networks:
-     - back
 
   sp:
     build: 
       context: ./sp3/ 
       args:
         HOSTNAME_FOR_BROWSER: ${HOSTNAME_FOR_BROWSER:-idptestbed}
-    networks:
-     - back
     secrets:
      - source: sp_key
 
   # for storage of generated ids by idp
   mysql:
     image: mysql:5.7.42
-    networks:
-      - back
     environment:
       #- MYSQL_ROOT_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=t
@@ -95,14 +82,6 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "mysql shibboleth >/dev/null 2>&1 </dev/null"]
       start_period: 10s
-
-  
-
-networks:
-  front:
-    driver: bridge
-  back:    
-    driver: bridge
 
 secrets:
   idp_backchannel:
