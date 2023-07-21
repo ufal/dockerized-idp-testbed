@@ -37,6 +37,11 @@
             <PermitValueRule xsi:type="ANY"/>
         </AttributeRule>
 
+        <!-- cn -->
+        <AttributeRule attributeID="cn">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
         <!-- eduPersonPrincipalName -->
 	    <!--
         <AttributeRule attributeID="eduPersonPrincipalName">
