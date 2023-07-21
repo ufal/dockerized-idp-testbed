@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-/usr/sbin/shibd
+#  -f  Force removal of listener socket.
+/usr/sbin/shibd -f
 # Apache gets grumpy about PID files pre-existing
 rm -f /usr/local/apache2/logs/httpd.pid /run/httpd/httpd.pid
 
