@@ -11,6 +11,9 @@
 
         <Extensions>
             <shibmd:Scope regexp="false">example.org</shibmd:Scope>
+            <mdui:UIInfo>
+                    <mdui:DisplayName xml:lang="en">idp1 (https://idptestbed/idp/shibboleth)</mdui:DisplayName>
+            </mdui:UIInfo>
 <!--
     Fill in the details for your IdP here 
 
