@@ -4,7 +4,8 @@ FROM centos:centos7
 
 COPY etc-yum/shibboleth.repo /etc/yum.repos.d/shibboleth.repo
 
-RUN yum -y update \
+RUN sed -i -e '/^mirrorlist/d' -e 's/^#baseurl/baseurl/' -e 's#mirror#vault#' /etc/yum.repos.d/CentOS-Base.repo \
+    && yum -y update \
     && yum -y install httpd php mod_ssl shibboleth shibboleth-embedded-ds  \
     && yum -y clean all
 

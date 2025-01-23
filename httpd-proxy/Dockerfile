@@ -1,6 +1,7 @@
 FROM centos:centos7
 
-RUN yum -y update \
+RUN sed -i -e '/^mirrorlist/d' -e 's/^#baseurl/baseurl/' -e 's#mirror#vault#' /etc/yum.repos.d/CentOS-Base.repo \
+    && yum -y update \
     && yum -y install httpd mod_ssl mod_ldap \
     && yum -y clean all
 

@@ -2,7 +2,9 @@ FROM centos:centos7
 
 MAINTAINER John Gasper <jgasper@unicon.net>
 
-RUN yum install -y epel-release \
+RUN sed -i -e '/^mirrorlist/d' -e 's/^#baseurl/baseurl/' -e 's#mirror#vault#' /etc/yum.repos.d/CentOS-Base.repo \
+    && yum -y update \
+    && yum install -y epel-release \
     && yum update -y \
     && yum install -y 389-ds-base 389-adminutil \
     && yum clean all
